@@ -104,7 +104,28 @@ const deleteDinoEvent = (e) => {
     const dinoPosition = dinos.findIndex((p) => p.id ===dinoId);
     dinos.splice(dinoPosition, 1);
     printDinos(dinos);
-}
+};
+
+const feedEvents = () => {
+    const dinoFeedButtons = document.getElementsByClassName('feed-button');
+    for(let i = 0; i < dinoFeedButtons.length; i++){
+        dinoFeedButtons[i].addEventListener('click', feedDinoEvent)
+    };
+};
+
+const feedDinoEvent = (e) => {
+    const dinoId = e.target.closest(".card").id;
+    const dinoPosition = dinos.findIndex((p) => p.id === dinoId);
+    if (dinos[dinoPosition].health < 100) {
+        dinos[dinoPosition].health += 10;
+        printDinos(dinos);
+    };
+    if (dinos[dinoPosition].health > 100) {
+        dinos[dinoPosition].health = 100;
+        printDinos(dinos);
+    }
+};
+
 
 
 const printDinos = (dinoArray) => {
@@ -116,7 +137,10 @@ const printDinos = (dinoArray) => {
       domString += '<div class="card-body">';
       domString += `  <h5 class="card-title">${dinoArray[i].name}</h5>`;
       domString += `  <p class="card-text">Health: ${dinoArray[i].health}</p>`;
-      domString += `<div>`
+      domString += `<div class="row">`;
+      domString += `<button class="btn btn-outline-dark mt-1 col-6 feed-button"><i class="fas fa-bone"></i> Feed</button>`
+      domString += '</div>';
+      domString += `<div class="row">`
       domString += `<button class="btn btn-outline-dark single-dino col-6"><i class="far fa-eye"></i> View</button>`
       domString += `<button type="button" class="btn btn-outline-danger delete-dino col-6"><i class="fas fa-trash"></i> Delete</button>`
       domString += `</div>`
@@ -128,6 +152,7 @@ const printDinos = (dinoArray) => {
     singeDinoAddEvents();
     petEvents();
     deleteEvents();
+    feedEvents();
   };
 
 const newDino = (e) => {
