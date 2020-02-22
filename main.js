@@ -3,7 +3,6 @@ const dinos = [];
 
 const newDino = (e) => {
     e.preventDefault();
-
     const brandNewDino = {
         id: `dinos${dinos.length + 1}`,
         name: document.getElementById("dino-name").value,
@@ -16,6 +15,7 @@ const newDino = (e) => {
     }
     dinos.push(brandNewDino);
     document.getElementById("new-dino-form").reset();
+    document.getElementById('collapseOne').classList.remove('show');
     console.log("hello", dinos);
 }
 
