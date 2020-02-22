@@ -1,10 +1,60 @@
-// EMPTY DINO ARRAY
-const dinos = [];
+const dinos = [
+    {
+      id: 'dino1',
+      name: 'Rex',
+      type: 'T Rex',
+      age: 100,
+      owner: 'Zoe',
+      adventures: [],
+      health: 100,
+      imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/61fC04pumjL._AC_SL1001_.jpg'
+    },
+    {
+      id: 'dino2',
+      name: 'Steve',
+      type: 'Velociraptor',
+      age: 1,
+      owner: 'Mary',
+      adventures: [],
+      health: 100,
+      imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/61fC04pumjL._AC_SL1001_.jpg'
+    },
+    {
+      id: 'dino3',
+      name: 'Susan',
+      type: 'Stegasaurus',
+      age: 55,
+      owner: 'Luke',
+      adventures: [],
+      health: 100,
+      imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/61fC04pumjL._AC_SL1001_.jpg'
+    }
+  ];
 
 const printToDom = (divId, textToPrint) => {
     const selectedDiv = document.getElementById(divId);
     selectedDiv.innerHTML = textToPrint;
 ;}
+
+const closeSingeViewEvent = () => {
+    printToDom("single-view", "");
+    printDinos(dinos);
+}
+
+const viewSingleDino = () => {
+    let domString = "";
+    domString += `<button id="close-single-view"><i class="far fa-window-close"></i></button>`;
+    printToDom('kennel', '');
+    printToDom('single-view', domString)
+    document.getElementById("close-single-view").addEventListener('click', closeSingeViewEvent);
+}
+
+const singeDinoAddEvents = () => {
+    const dinoViewButtons = document.getElementsByClassName('single-dino');
+    for(let i = 0; i < dinoViewButtons.length; i++){
+        dinoViewButtons[i].addEventListener('click', viewSingleDino)
+    }
+}
 
 const printDinos = (dinoArray) => {
     let domString = '';
@@ -15,11 +65,13 @@ const printDinos = (dinoArray) => {
       domString += '<div class="card-body">';
       domString += `  <h5 class="card-title">${dinoArray[i].name}</h5>`;
       domString += `  <p class="card-text">Health: ${dinoArray[i].health}</p>`;
+      domString += `<button class="btn btn-outline-dark single-dino"><i class="far fa-eye"></i> View</button>`
       domString += '</div>';
       domString += '</div>';
       domString += '</div>';
     }
     printToDom('kennel', domString);
+    singeDinoAddEvents();
   };
 
 const newDino = (e) => {
@@ -48,6 +100,7 @@ const events = () =>{
 // PAGE LOAD
 const init = () => {
     events();
+    printDinos(dinos);
 }
 
 init();
