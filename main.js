@@ -16,7 +16,7 @@ const dinos = [
       age: 1,
       owner: 'Mary',
       adventures: [],
-      health: 100,
+      health: 1,
       imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/61fC04pumjL._AC_SL1001_.jpg'
     },
     {
@@ -26,7 +26,7 @@ const dinos = [
       age: 55,
       owner: 'Luke',
       adventures: [],
-      health: 100,
+      health: 45,
       imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/61fC04pumjL._AC_SL1001_.jpg'
     }
   ];
@@ -63,9 +63,9 @@ const viewSingleDino = (e) => {
     domString += '</div>';
     
     printToDom('kennel', '');
-    printToDom('single-view', domString)
+    printToDom('single-view', domString);
     document.getElementById("close-single-view").addEventListener('click', closeSingeViewEvent);
-}
+};
 
 //EVENT LISTENER CALLS "viewSingleDino" ^^^
 const singeDinoAddEvents = () => {
@@ -74,7 +74,24 @@ const singeDinoAddEvents = () => {
     for(let i = 0; i < dinoViewButtons.length; i++){
         dinoViewButtons[i].addEventListener('click', viewSingleDino)
     }
+};
+
+const petEvents = () => {
+    const dinoPetButtons = document.getElementsByClassName('dino-photo');
+    for(let i = 0; i < dinoPetButtons.length; i++){
+        dinoPetButtons[i].addEventListener('mouseleave', dinoHealth)
+    }
+};
+
+const dinoHealth = (e) => {
+    const dinoId = e.target.closest(".card").id;
+    const dinoPosition = dinos.findIndex((printDino) => printDino.id === dinoId);
+    if (dinos[dinoPosition].health < 100) {
+        dinos[dinoPosition].health += 1;
+        printDinos(dinos);
+    }
 }
+
 
 const printDinos = (dinoArray) => {
     let domString = '';
@@ -92,6 +109,7 @@ const printDinos = (dinoArray) => {
     }
     printToDom('kennel', domString);
     singeDinoAddEvents();
+    petEvents();
   };
 
 const newDino = (e) => {
