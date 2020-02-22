@@ -15,6 +15,7 @@ const newDino = (e) => {
         imageUrl: document.getElementById("dino-image").value
     }
     dinos.push(brandNewDino);
+    document.getElementById("new-dino-form").reset();
     console.log("hello", dinos);
 }
 
